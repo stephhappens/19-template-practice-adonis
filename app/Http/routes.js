@@ -16,11 +16,22 @@
 */
 
 const Route = use('Route');
-Route.on('/').render('welcome');
+const fetch = require('node-fetch');
 
-Route.get('/uptime', function*(request, response) {
-  response.send({
-    version: '1.0.0',
-    update: process.uptime(),
-  });
+
+Route.get('/', function * (request, response) {
+  yield response.sendView('form');
+
+  const apiUrl = yield fetch(`http://json-data.herokuapp.com/forms`);
+  const data = yield apiUrl.json();
+
+  response.send(data);
+});
+
+Route.post('/', function * (request, response) {
+  // const inputs = request.only('type', 'label', 'id', 'icon', 'options');
+  const input = request.all();
+
+
+  response.send(input);
 });
