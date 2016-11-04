@@ -15,6 +15,12 @@
 | Route.resource('user', 'UserController')
 */
 
-const Route = use('Route')
+const Route = use('Route');
+Route.on('/').render('welcome');
 
-Route.on('/').render('welcome')
+Route.get('/uptime', function*(request, response) {
+  response.send({
+    version: '1.0.0',
+    update: process.uptime(),
+  });
+});
