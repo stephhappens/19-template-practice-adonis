@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Form</title>
+  </head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css">
+  <body>
+    <div class="section">
+    <div class="container">
+
+    <form class="panel" @submit.prevent="submitForm" action="/" method="POST">
+      {{ csrfField }}
+      <p class="panel-heading">
+        Sign Up For My Web App
+      </p>
+
+
+    <div class="panel-block">
+      <p class="control has-icon" v-for= "input in formInputs">
+      <template v-if="input.type === 'select'" v-model="formValues[input.id]">
+        <span class="select is-fullwidth">
+    <select>
+        <option v-for="option in input.options"> {{ option.label }} </option>
+    </select>
+  </span>
+      </template>
+
+      <template v-else>
+        <template v-if="input.type === 'textarea'">
+          <textarea class="input textarea" :placeholder="input.label" v-model="formValues[input.id]"></textarea>
+        <i :class="input.icon" class="fa" aria-hidden="true"></i>
+        </template>
+
+      <template v-else>
+        <input class="input" :placeholder="input.label" v-model="formValues[input.id]">
+        <i :class="input.icon" class="fa" aria-hidden="true"></i>
+      </template>
+    </template>
+  </p>
+</div>
+
+  <div class="panel-block">
+     <button class="button is-fullwidth is-primary"> Submit </button>
+  </div>
+</form>
+ </div>
+ </div>
+  </body>
+</html>
